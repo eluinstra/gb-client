@@ -26,5 +26,5 @@ import nl.logius.digikoppeling.gb._2010._10.ExternalDataReference;
 public interface GBService
 {
   @WebResult(name="external-data-reference", targetNamespace="http://www.logius.nl/digikoppeling/gb/2010/10")
-	ExternalDataReference getExternalDataReference(@WebParam(name="path") @XmlElement(required=true) Long...ids) throws GBServiceException;
+	ExternalDataReference getExternalDataReference(@WebParam(name="id") @XmlElement(required=true) Long...ids) throws GBServiceException;
 }
