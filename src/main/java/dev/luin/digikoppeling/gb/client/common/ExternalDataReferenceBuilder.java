@@ -47,7 +47,7 @@ public class ExternalDataReferenceBuilder
 	private DataReference createDataReference(FSFile fsFile)
 	{
 		val result = new DataReference();
-		result.setContextId(fsFile.getMd5Checksum());
+		result.setContextId(fsFile.getMd5Checksum().getValue());
 		result.setContent(createContent(fsFile));
 		result.setTransport(createTransport(fsFile.getUrl()));
 		return result;
@@ -59,7 +59,7 @@ public class ExternalDataReferenceBuilder
 		result.setFilename(fsFile.getName());
 		result.setContentType(fsFile.getContentType());
 		result.setSize(BigInteger.valueOf(fsFile.getFileLength()));
-		result.setChecksum(createMD5Checksum(fsFile.getMd5Checksum()));
+		result.setChecksum(createMD5Checksum(fsFile.getMd5Checksum().getValue()));
 		return result;
 	}
 
