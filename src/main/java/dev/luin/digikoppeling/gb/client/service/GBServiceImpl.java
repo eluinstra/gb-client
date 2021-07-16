@@ -16,6 +16,7 @@
 package dev.luin.digikoppeling.gb.client.service;
 
 import dev.luin.digikoppeling.gb.client.common.ExternalDataReferenceBuilder;
+import dev.luin.file.client.core.file.FileId;
 import dev.luin.file.client.core.file.FileSystem;
 import io.vavr.collection.List;
 import lombok.AccessLevel;
@@ -41,6 +42,7 @@ public class GBServiceImpl implements GBService
 	{
 		log.debug("getExternalDataReference {}",ids);
 		val files = List.of(ids)
+				.map(FileId::new)
 				//.map(p -> fileService.getFile(path).orElseThrow(() -> new GBServiceException(p + " not found!")))
 				.map(p -> fileSystem.findFile(p).<GBServiceException>getOrElseThrow(() -> new GBServiceException(p + " not found!")));
 		return externalDataReferenceBuilder.build(files);

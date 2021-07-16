@@ -15,10 +15,9 @@
  */
 package dev.luin.digikoppeling.gb.client.common;
 
-import java.math.BigInteger;
-import java.net.URL;
-
 import dev.luin.file.client.core.file.FSFile;
+import dev.luin.file.client.core.file.Md5Checksum;
+import dev.luin.file.client.core.file.Url;
 import io.vavr.collection.Seq;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -40,7 +39,7 @@ public class ExternalDataReferenceBuilder
 	{
 		val result = new ExternalDataReference();
 		result.setProfile(GbProfile.DIGIKOPPELING_GB_1_0);
-		result.getDataReference().addAll(fsFiles.map(f -> createDataReference(f)).asJava());
+		result.getDataReference().addAll(fsFiles.map(this::createDataReference).asJava());
 		return result;
 	}
 
@@ -56,40 +55,40 @@ public class ExternalDataReferenceBuilder
 	private Content createContent(FSFile fsFile)
 	{
 		val result = new Content();
-		result.setFilename(fsFile.getName());
-		result.setContentType(fsFile.getContentType());
-		result.setSize(BigInteger.valueOf(fsFile.getFileLength()));
-		result.setChecksum(createMD5Checksum(fsFile.getMd5Checksum().getValue()));
+		result.setFilename(fsFile.getName().getValue());
+		result.setContentType(fsFile.getContentType().getValue());
+		result.setSize(fsFile.getFileLength().toBigInteger());
+		result.setChecksum(createMD5Checksum(fsFile.getMd5Checksum()));
 		return result;
 	}
 
-	private ChecksumType createMD5Checksum(@NonNull String md5checksum)
+	private ChecksumType createMD5Checksum(@NonNull Md5Checksum md5checksum)
 	{
 		val result = new ChecksumType();
 		result.setType("MD5");
-		result.setValue(md5checksum);
+		result.setValue(md5checksum.getValue());
 		return result;
 	}
 
-	private Transport createTransport(@NonNull URL url)
+	private Transport createTransport(@NonNull Url url)
 	{
 		val result = new Transport();
 		result.setLocation(createLocation(url));
 		return result;
 	}
 
-	private Location createLocation(@NonNull URL url)
+	private Location createLocation(@NonNull Url url)
 	{
 		val result = new Location();
 		result.setReceiverUrl(createUrl(url));
 		return result;
 	}
 
-	private UrlType createUrl(@NonNull URL url)
+	private UrlType createUrl(@NonNull Url url)
 	{
 		val result = new UrlType();
 		result.setType("xs:anyURI");
-		result.setValue(url.toString());
+		result.setValue(url.getValue());
 		return result;
 	}
 
