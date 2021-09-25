@@ -15,8 +15,6 @@
  */
 package dev.luin.digikoppeling.gb.client.service;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +28,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GBServiceConfig
 {
-	@Autowired
-	FileSystem fileSystem;
-
 	@Bean
-	public GBService gbService() throws DatatypeConfigurationException
+	public GBService gbService(@Autowired FileSystem fileSystem)
 	{
 		return new GBServiceImpl(fileSystem,new ExternalDataReferenceBuilder());
 	}
