@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2020 E.Luinstra
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,7 +49,7 @@ public class GBServiceImpl implements GBService
 	@Override
 	public ExternalDataReference getExternalDataReference(@PathParam("ids") Long...ids) throws GBServiceException
 	{
-		log.debug("getExternalDataReference {}",ids);
+		log.debug("getExternalDataReference {}",(Object[])ids);
 		val files = List.of(ids)
 				.map(FileId::new)
 				//.map(p -> fileService.getFile(path).orElseThrow(() -> new GBServiceException(p + " not found!")))
