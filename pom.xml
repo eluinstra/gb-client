@@ -22,7 +22,7 @@
 	<artifactId>gb-client</artifactId>
 	<packaging>jar</packaging>
 	<name>Grote Berichten Client</name>
-	<version>1.0.0-M4</version>
+	<version>1.0.0</version>
 	<description>This library implements the Grote Berichten Client</description>
 	<url>https://github.com/eluinstra/gb-client</url>
 	<developers>
@@ -116,7 +116,7 @@
 		<dependency>
 			<groupId>dev.luin.file.client</groupId>
 			<artifactId>file-client-core</artifactId>
-			<version>1.0.0-M4</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 	<repositories>
