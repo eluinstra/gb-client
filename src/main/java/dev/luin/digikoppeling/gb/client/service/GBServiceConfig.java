@@ -15,14 +15,13 @@
  */
 package dev.luin.digikoppeling.gb.client.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import dev.luin.digikoppeling.gb.client.common.ExternalDataReferenceBuilder;
 import dev.luin.file.client.core.file.FileSystem;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -31,6 +30,6 @@ public class GBServiceConfig
 	@Bean
 	public GBService gbService(@Autowired FileSystem fileSystem)
 	{
-		return new GBServiceImpl(fileSystem,new ExternalDataReferenceBuilder());
+		return new GBServiceImpl(fileSystem, new ExternalDataReferenceBuilder());
 	}
 }
