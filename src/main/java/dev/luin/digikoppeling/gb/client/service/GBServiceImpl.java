@@ -15,26 +15,25 @@
  */
 package dev.luin.digikoppeling.gb.client.service;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import dev.luin.digikoppeling.gb.client.common.ExternalDataReferenceBuilder;
 import dev.luin.file.client.core.file.FileId;
 import dev.luin.file.client.core.file.FileSystem;
 import io.vavr.collection.List;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import lombok.val;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import nl.logius.digikoppeling.gb._2010._10.ExternalDataReference;
 
 @Slf4j
-@FieldDefaults(level=AccessLevel.PRIVATE, makeFinal=true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @AllArgsConstructor
 @Produces(MediaType.APPLICATION_JSON)
 public class GBServiceImpl implements GBService
@@ -49,10 +48,10 @@ public class GBServiceImpl implements GBService
 	@Override
 	public ExternalDataReference getExternalDataReference(@PathParam("ids") Long...ids) throws GBServiceException
 	{
-		log.debug("getExternalDataReference {}",(Object[])ids);
+		log.debug("getExternalDataReference {}", (Object[])ids);
 		val files = List.of(ids)
 				.map(FileId::new)
-				//.map(p -> fileService.getFile(path).orElseThrow(() -> new GBServiceException(p + " not found!")))
+				// .map(p -> fileService.getFile(path).orElseThrow(() -> new GBServiceException(p + " not found!")))
 				.map(p -> fileSystem.findFile(p).<GBServiceException>getOrElseThrow(() -> new GBServiceException(p + " not found!")));
 		return externalDataReferenceBuilder.build(files);
 	}
