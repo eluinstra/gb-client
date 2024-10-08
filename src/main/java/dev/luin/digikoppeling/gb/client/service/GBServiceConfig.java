@@ -17,19 +17,37 @@ package dev.luin.digikoppeling.gb.client.service;
 
 import dev.luin.digikoppeling.gb.client.common.ExternalDataReferenceBuilder;
 import dev.luin.file.client.core.file.FileSystem;
+import dev.luin.file.client.web.WebConfig;
+import jakarta.xml.ws.Endpoint;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+
+import org.apache.cxf.endpoint.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource(value = {"classpath:dev/luin/digikoppeling/gb/client/default.properties"}, ignoreResourceNotFound = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class GBServiceConfig
+public class GBServiceConfig extends WebConfig
 {
 	@Bean
 	public GBService gbService(@Autowired FileSystem fileSystem)
 	{
 		return new GBServiceImpl(fileSystem, new ExternalDataReferenceBuilder());
+	}
+
+	@Bean
+	public Endpoint gbServiceEndpoint(GBService gbService)
+	{
+		return publishEndpoint(gbService, "/gb", "http://luin.dev/digikoppeling/client/gb/1.0", "GBService", "GBServicePort");
+	}
+
+	@Bean
+	public Server createGBJAXRSServer(GBService gbService)
+	{
+		return createJAXRSServer(GBServiceImpl.class, gbService, "/gb");
 	}
 }
